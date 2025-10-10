@@ -12,8 +12,13 @@
 
 
 
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE 
+# define BUFFER_SIZE 42
+#endif
 
 # include <fcntl.h>
 # include <stdio.h>
@@ -22,29 +27,25 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-# define BUFFER_SIZE 3
+#define DEFAULT_FILE_CONTAIN { .p = {0}, .fd = -1, .read_f = 0, .i = 0, .atn = false }
 
-typedef struct {
+typedef struct s_file
+{
     char p[BUFFER_SIZE + 1];
     int fd;
-    size_t	read_f;
+    int	read_f;
     int i;
-    bool ATN;
-}file_containt;
+    bool atn;
+} t_file;
 
-extern file_containt file;
-// static file_containt file;
-
-// file_containt* get_file(void) {
-//     return &file;
-// }
+extern  t_file g_file;
 
 char	*get_next_line(int fd);
-// char *get_next_line_utils(char *p,int rows);
-bool	ft_strchr(char *s);
-// char	*ft_strchr(char *c, int *len);
 
-int	len_ETB();
+bool	ft_strchr(char *s);
+
+
+int	len_etb();
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(char *s);
 

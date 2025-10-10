@@ -13,23 +13,24 @@
 #include "get_next_line.h"
 
 
+
 void	ft_strlcat(char *dst, char *src)
 {
 	size_t len_dest;
 
 	len_dest = ft_strlen(dst);
-	while (src[file.i] != '\n' && src[file.i] != '\0')
+	while (src[g_file.i] != '\n' && src[g_file.i] != '\0')
 	{
-		dst[len_dest + file.i] = src[file.i];
-		file.i++;
+		dst[len_dest + g_file.i] = src[g_file.i];
+		g_file.i++;
 	}
-	if(src[file.i] == '\n')
+	if(src[g_file.i] == '\n')
 	{
-		file.ATN = true;
-		dst[len_dest + file.i] = '\n';
-		file.i++;
+		g_file.atn = true;
+		dst[len_dest + g_file.i] = '\n';
+		g_file.i++;
 	}
-	dst[len_dest + file.i] = '\0';
+	dst[len_dest + g_file.i] = '\0';
 }
 
 void	ft_strlcpy(char *dest, const char *src)
@@ -55,16 +56,16 @@ size_t	ft_strlen(char *s)
 	return (len);
 }
 
-int	len_ETB()
+int	len_etb()
 {
 	int i = 0;
 
-	while (file.p[file.i + i] != '\n' && file.p[file.i + i] != '\0')
+	while (g_file.p[g_file.i + i] != '\n' && g_file.p[g_file.i + i] != '\0')
 	{
 		i++;
 	}
 
-	if (file.p[file.i + i] == '\n')
+	if (g_file.p[g_file.i + i] == '\n')
 		return (i + 1);
 	return (i);
 }
@@ -75,20 +76,20 @@ bool	ft_strchr(char *s)
 	i = 0;
 
 	
-	while (file.p[file.i] != '\n' && file.p[file.i] != '\0')
+	while (g_file.p[g_file.i] != '\n' && g_file.p[g_file.i] != '\0')
 	{
-		s[i] = file.p[file.i] ;
-		file.i++;
+		s[i] = g_file.p[g_file.i] ;
+		g_file.i++;
 		i++;
 	}
-	if (file.p[file.i] == '\n')
+	if (g_file.p[g_file.i] == '\n')
 	{
 		s[i++] = '\n';
-		file.i++;
-		file.ATN = true;
+		g_file.i++;
+		g_file.atn = true;
 	}
 	s[i] = '\0';
-	return(file.p[file.i - 1] == '\n');
+	return(g_file.p[g_file.i - 1] == '\n');
 }
 
 
@@ -99,10 +100,10 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (s1 && !s2[0])
 	{
-		file.ATN = true;
+		g_file.atn = true;
 		return (s1);
 	}
-	len = ft_strlen(s1) + len_ETB(s2) + 1;
+	len = ft_strlen(s1) + len_etb(s2) + 1;
 	str = malloc(len);
 	if (!str)
 		return (NULL);
