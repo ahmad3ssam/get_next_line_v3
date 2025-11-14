@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahhammad <ahhammad@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 21:48:18 by ahhammad          #+#    #+#             */
-/*   Updated: 2025/11/14 21:48:18 by ahhammad         ###   ########.fr       */
+/*   Updated: 2025/11/15 02:01:32 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// char    *free_buffer(char *buffer)
-// {
-//     free(buffer);
-//     return (NULL);
-// }
+char    *free_buffer(char *buffer)
+{
+    free(buffer);
+    return (NULL);
+}
 
 int set_data(char **re_data, char *buffer,int fd)
 {
@@ -25,11 +25,11 @@ int set_data(char **re_data, char *buffer,int fd)
 
     if(!buffer)
     {
-        free(buffer);
-        free(*re_data);
         return (1);
     }
+    printf("inside set_data\n");
     read_f= read(fd, buffer, BUFFER_SIZE);
+    printf("read_f in set_data:%d\n",read_f);
     if(read_f > 0)
     {
         buffer[read_f] = '\0';
@@ -44,7 +44,8 @@ int set_data(char **re_data, char *buffer,int fd)
         return (-1);
     }
     *re_data = line;
-    free(line);
+    return (0);
+    // free(line);
 }
 
 int search_nl(char *buffer)
@@ -79,7 +80,7 @@ char    *get_line(char **re_data,char *buffer)
     len_buff = search_nl(buffer);
     i = 0;
     if(!*re_data)
-        return(free(buffer),NULL);
+        return(free_buffer(buffer));
     line = *re_data;
     printf("line before get_line:%s\n",buffer);
     // printf("line in get_line:%d\n",ft_strlen(buffer) - len_buff);
@@ -89,7 +90,7 @@ char    *get_line(char **re_data,char *buffer)
         printf("len_buff:%d\n",ft_strlen(buffer) - len_buff);
         *re_data = malloc(ft_strlen(buffer) - len_buff);
         if(!*re_data)
-            return(free(buffer),NULL);
+            return(free_buffer(buffer));
         printf("re_data allocated in get_line\n");
 
         while(i < BUFFER_SIZE)
@@ -119,7 +120,7 @@ char	*get_next_line(int fd)
         return (NULL);
     
     if(set_data(&re_data, buffer,fd) == -1)
-        return (free(buffer),NULL);
+        return (free_buffer(buffer));
     while(re_data != NULL)
     {
         // printf("re_data in gnl:%s\n",re_data);
@@ -131,6 +132,8 @@ char	*get_next_line(int fd)
         }
         else
         {
+            // free_buffer(buffer);
+            // buffer = NULL;
             break;  
         }
     }
