@@ -3,53 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahhammad <ahhammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahhammad <ahhammad@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/24 17:19:11 by ahhammad          #+#    #+#             */
-/*   Updated: 2025/09/24 17:19:12 by ahhammad         ###   ########.fr       */
+/*   Created: 2025/11/14 21:48:46 by ahhammad          #+#    #+#             */
+/*   Updated: 2025/11/14 23:18:38 by ahhammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFFER_SIZE 
-# define BUFFER_SIZE 42
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # include <fcntl.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <stdbool.h>
 
-#define DEFAULT_FILE_CONTAIN { .p = {0}, .fd = -1, .read_f = 0, .i = 0, .atn = false }
-
-typedef struct s_file
-{
-    char p[BUFFER_SIZE + 1];
-    int fd;
-    int	read_f;
-    int i;
-    bool atn;
-} t_file;
-
-extern  t_file g_file;
-
+int		ft_strlen(char *s);
+char*	ft_strjoin( char *s1, char *s2);
+void	ft_strlcpy(char *dest, const char *src);
+void	ft_strlcat(char *dst, char *src);
+int     search_nl(char *buffer);
+char    *get_line(char **re_data,char *buffer); 
+int     set_data(char **re_data, char *buffer,int fd);
 char	*get_next_line(int fd);
-
-bool	ft_strchr(char *s);
-
-
-int	len_etb();
-char	*ft_strjoin(char *s1, char *s2);
-size_t	ft_strlen(char *s);
-
-void	ft_bzeor(char *p,int l);
-
-
+// char    *free_bufffer(char *p);
 #endif
